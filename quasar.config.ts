@@ -2,6 +2,7 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
 import { defineConfig } from '#q-app/wrappers';
+import path from 'path';
 
 export default defineConfig((/* ctx */) => {
   return {
@@ -47,7 +48,7 @@ export default defineConfig((/* ctx */) => {
         // extendTsConfig (tsConfig) {}
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -65,7 +66,6 @@ export default defineConfig((/* ctx */) => {
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
-      
       vitePlugins: [
         ['vite-plugin-checker', {
           vueTsc: true,
@@ -74,7 +74,20 @@ export default defineConfig((/* ctx */) => {
             useFlatConfig: true
           }
         }, { server: false }]
-      ]
+      ],
+
+      alias:{
+        '@src': path.resolve(__dirname, './src'),
+        '@icons': path.resolve(__dirname, './src/assets/icons'),
+        '@images': path.resolve(__dirname, './src/assets/images'),
+        '@router': path.resolve(__dirname, './src/router'),
+        '@services': path.resolve(__dirname, './src/services'),
+        '@stores': path.resolve(__dirname, './src/stores'),
+        '@components': path.resolve(__dirname, './src/ui/components'),
+        '@layouts': path.resolve(__dirname, './src/ui/layouts'),
+        '@pages': path.resolve(__dirname, './src/ui/pages'),
+        '@utils': path.resolve(__dirname, './src/utils'),
+      }
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
