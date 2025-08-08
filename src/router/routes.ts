@@ -1,5 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router';
-import PublicRoutes from 'layouts/PublicRoutes.vue';
+import PublicRoutes from '@layouts/PublicRoutes.vue';
+import AuthPage from '@pages/public/AuthPage.vue';
+import ErrorNotFound from '@pages/public/ErrorNotFound.vue';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,13 +14,13 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/autenticacao',
-        component: () => import('pages/AuthPage.vue')
+        component: AuthPage
       }
     ],
   },
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/ErrorNotFound.vue'),
+    component: ErrorNotFound
   },
 ];
 
