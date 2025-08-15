@@ -1,7 +1,9 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-page-container>
-      <router-view/>
+      <q-page class="flex flex-center">
+        <router-view/>
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>

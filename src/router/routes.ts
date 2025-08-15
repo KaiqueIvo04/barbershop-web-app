@@ -1,19 +1,26 @@
 import type { RouteRecordRaw } from 'vue-router';
-import PublicRoutes from '@layouts/PublicRoutes.vue';
+import LayoutPublicRoutes from '@layouts/PublicRoutes.vue';
+import IndexPage from '@pages/public/IndexPage.vue';
 import AuthPage from '@pages/public/AuthPage.vue';
 import ErrorNotFound from '@pages/public/ErrorNotFound.vue';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: PublicRoutes,
+    component: LayoutPublicRoutes,
     children: [
       {
         path: '',
-        redirect: '/autenticacao'
+        redirect: '/inicio'
+      },
+      {
+        path: '/inicio',
+        name: 'IndexPage',
+        component: IndexPage
       },
       {
         path: '/autenticacao',
+        name: 'AuthPage',
         component: AuthPage
       }
     ],

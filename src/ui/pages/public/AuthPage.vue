@@ -1,50 +1,47 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-card class="login-card q-pa-lg">
-      <div class="div-card row">
-        <!-- Seção da Imagem -->
-        <div class="col-12 col-md-6 image-section">
-          <q-img 
-            src="~assets/logos/logo.png" 
-            class="logo-image" 
-            no-spinner 
-            fit="contain"
-            style="border-radius: 50%;"
-          />
-        </div>
-
-        <!-- Seção do Formulário -->
-        <div class="col-12 col-md-6 form-section">
-          <q-form class="login-form">
-            <q-input 
-              class="q-mb-md input-field"
-              v-model="email" 
-              label="Email" 
-              filled
-              placeholder="Digite seu email"
-            >
-              <template v-slot:prepend>
-                <q-icon name="mail_outline" size="18px" left />
-              </template>
-            </q-input>
-            <q-input 
-              class="q-mb-md input-field"
-              v-model="password" 
-              label="Senha" 
-              filled 
-              type="password" 
-              placeholder="Digite sua senha"
-            >
-              <template v-slot:prepend>
-                <q-icon name="lock_outline" size="18px" left />
-              </template>
-            </q-input>
-            <q-btn label="Entrar" color="primary" class="submit-btn" size="md" />
-          </q-form>
-        </div>
+  <q-card class="login-card q-pa-lg">
+    <div class="div-card row">
+      <!-- Seção da Imagem -->
+      <div class="col-12 col-md-6 flex flex-center">
+        <q-img 
+          src="~assets/logos/logo.png" 
+          class="logo-image" no-spinner 
+          fit="contain" 
+          style="border-radius: 50%"
+        />
       </div>
-    </q-card>
-  </q-page>
+
+      <!-- Seção do Formulário -->
+      <div class="col-12 col-md-6 form-section">
+        <!-- Input de e-mail  -->
+        <q-form class="login-form">
+          <q-input class="q-mb-md input-field" v-model="email" label="Email" filled placeholder="Digite seu email">
+            <template v-slot:prepend>
+              <q-icon name="mail_outline" size="18px" left />
+            </template>
+          </q-input>
+
+          <!-- Input de senha  -->
+          <q-input class="q-mb-md input-field" v-model="password" label="Senha" filled type="password"
+            placeholder="Digite sua senha">
+            <template v-slot:prepend>
+              <q-icon name="lock_outline" size="18px" left />
+            </template>
+          </q-input>
+
+          <!-- Botão de Entrar -->
+          <q-btn label="Entrar" color="primary" class="submit-btn" size="md" />
+
+          <router-link
+            :to="{ name: 'IndexPage' }"
+            class="text-center"
+          >
+            <p class=" text-caption q-mt-md">Voltar</p>
+          </router-link>
+        </q-form>
+      </div>
+    </div>
+  </q-card>
 </template>
 
 <script setup lang="ts">
@@ -65,12 +62,6 @@ const password = ref('')
 .div-card {
   width: 100%;
   min-height: 350px;
-}
-
-.image-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .logo-image {
