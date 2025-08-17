@@ -20,7 +20,7 @@
       <p class="text-center q-mt-md q-mb-sm text-h6">OU</p>
 
       <q-btn
-         @click="router.push({ name: '' })"
+         @click="router.push({ name: 'RegisterPage' })"
          class="q-mt-sm q-py-md w-p-100"
          color="primary"
       >
@@ -36,7 +36,6 @@ const router = useRouter();
 </script>
 
 <style scoped>
-
 @media (max-width: 1024px) {
   .q-card {
     max-width: 90%;
