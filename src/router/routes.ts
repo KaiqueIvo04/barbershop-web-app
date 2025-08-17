@@ -2,6 +2,7 @@ import type { RouteRecordRaw } from 'vue-router';
 import LayoutPublicRoutes from '@layouts/PublicRoutes.vue';
 import IndexPage from '@pages/public/IndexPage.vue';
 import AuthPage from '@pages/public/AuthPage.vue';
+import RegisterPage from '@pages/public/RegisterPage.vue';
 import ErrorNotFound from '@pages/public/ErrorNotFound.vue';
 
 const routes: RouteRecordRaw[] = [
@@ -22,6 +23,11 @@ const routes: RouteRecordRaw[] = [
         path: '/autenticacao',
         name: 'AuthPage',
         component: AuthPage
+      },
+      {
+        path: '/register',
+        name: 'RegisterPage',
+        component: RegisterPage
       }
     ],
   },

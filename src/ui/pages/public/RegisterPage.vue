@@ -16,8 +16,15 @@
         <q-form class="q-my-lg">
           <div class="h-p-100 column justify-center"> <!-- h-p-100 é personalizado -->
             <div>
+              <!-- Input de nome  -->
+              <q-input class="" v-model="name" label="Nome" filled placeholder="Digite seu nome">
+                <template v-slot:prepend>
+                  <q-icon name="person_outline" size="18px" left />
+                </template>
+              </q-input>
+              
               <!-- Input de e-mail  -->
-              <q-input v-model="email" label="Email" filled placeholder="Digite seu email">
+              <q-input class="q-mt-md" v-model="email" label="Email" filled placeholder="Digite seu email">
                 <template v-slot:prepend>
                   <q-icon name="mail_outline" size="18px" left />
                 </template>
@@ -30,10 +37,18 @@
                   <q-icon name="lock_outline" size="18px" left />
                 </template>
               </q-input>
+
+              <!-- Input de confirmar senha  -->
+              <q-input class="q-mt-md" v-model="confirmPassword" label="Confirmar Senha" filled type="password"
+                placeholder="Confirme sua senha">
+                <template v-slot:prepend>
+                  <q-icon name="lock_outline" size="18px" left />
+                </template>
+              </q-input>
             </div>
             <!-- Botões -->
             <div class="q-mt-lg">
-              <q-btn label="Entrar" color="primary" class="submit-btn" size="md" />
+              <q-btn label="Cadastrar" color="primary" class="submit-btn" size="md" />
               <router-link
                 :to="{ name: 'IndexPage' }"
                 class="text-center"
@@ -51,8 +66,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+const name = ref('')
 const email = ref('')
 const password = ref('')
+const confirmPassword = ref('')
 </script>
 
 <style scoped>
