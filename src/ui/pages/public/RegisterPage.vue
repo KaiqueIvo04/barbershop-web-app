@@ -86,7 +86,7 @@
                         v-model="confirmPassword"
                         class="q-mt-md"
                         :type="showPassword ? 'text' : 'password'"
-                        label="Confirme sua senha"
+                        label="Confirmar senha"
                         placeholder="Confirme sua senha"
                         filled
                      >

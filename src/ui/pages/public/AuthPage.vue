@@ -5,17 +5,16 @@
          <!-- Seção da Imagem -->
          <div class="col-12 col-md-6 flex flex-center">
             <div class="q-ma-lg w-p-100 row justify-center">
-              <q-img
-                 class="logo-image"
-                 style="border-radius: 50%"
-                 fit="contain"
-                 src="~assets/logos/logo.png"
-                 no-spinner
-                 alt="Logo da barbearia"
-              />
+               <q-img
+                  class="logo-image"
+                  style="border-radius: 50%"
+                  fit="contain"
+                  src="~assets/logos/logo.png"
+                  no-spinner
+                  alt="Logo da barbearia"
+               />
             </div>
          </div>
-
          <!-- Seção do Formulário -->
          <div class="col-12 col-md-6 row justify-center">
             <!-- Alinha apenas na horizontal-->
@@ -35,7 +34,7 @@
                            <!-- Ícone de E-mail -->
                            <q-icon
                               name="mail_outline"
-                              size="18px"                           
+                              size="18px"
                            />
                         </template>
                      </q-input>
