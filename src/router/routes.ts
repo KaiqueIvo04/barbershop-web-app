@@ -6,11 +6,15 @@ import AuthPage from '@pages/public/AuthPage.vue';
 import RegisterPage from '@pages/public/RegisterPage.vue';
 import ErrorNotFound from '@pages/public/ErrorNotFound.vue';
 import HomePage from '@pages/private/HomePage.vue';
+import homeMeta from './meta/home.meta';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: LayoutPrivateRoutes,
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: '',
@@ -19,13 +23,17 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/home',
         name: 'HomePage',
-        component: HomePage
+        component: HomePage,
+        meta: homeMeta
       }
     ]
   },
   {
     path: '/teste',
     component: LayoutPublicRoutes,
+    meta: {
+      requiresAuth: false,
+    },
     children: [
       {
         path: '',
@@ -34,17 +42,26 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/inicio',
         name: 'IndexPage',
-        component: IndexPage
+        component: IndexPage,
+        meta: {
+          requiresAuth: false
+        }
       },
       {
         path: '/autenticacao',
         name: 'AuthPage',
-        component: AuthPage
+        component: AuthPage,
+        meta: {
+          requiresAuth: false
+        }
       },
       {
         path: '/register',
         name: 'RegisterPage',
-        component: RegisterPage
+        component: RegisterPage,
+        meta: {
+          requiresAuth: false
+        }
       }
     ],
   },

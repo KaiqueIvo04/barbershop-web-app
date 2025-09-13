@@ -81,6 +81,7 @@ export default defineConfig((/* ctx */) => {
         '@icons': path.resolve(__dirname, './src/assets/icons'),
         '@images': path.resolve(__dirname, './src/assets/images'),
         '@dtypes': path.resolve(__dirname, './src/domain/types'),
+        '@enums': path.resolve(__dirname, './src/domain/enums'),
         '@router': path.resolve(__dirname, './src/router'),
         '@services': path.resolve(__dirname, './src/services'),
         '@stores': path.resolve(__dirname, './src/stores'),

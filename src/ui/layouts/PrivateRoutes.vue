@@ -4,22 +4,28 @@
          class="bg-primary text-white"
          elevated
       >
-         <q-toolbar>
+         <q-toolbar class="row">
             <q-btn
-               @click="leftDrawerOpen ? 
-               leftDrawerOpen = false : 
-               leftDrawerOpen = true"
+               @click="
+                  leftDrawerOpen ? (leftDrawerOpen = false) : (leftDrawerOpen = true)
+               "
                icon="menu"
                dense
                flat
                round
             />
 
-            <q-toolbar-title>
-               <q-avatar>
-                  <img src="~assets/logos/logo.png" />
-               </q-avatar>
-               Cheff Barbearia
+            <q-toolbar-title class="row justify-center">
+               <router-link
+                  :to="HomePage"
+                  class="row items-center"
+               >
+                  <img
+                     class="logo-centered shadow-2"
+                     width="60px"
+                     src="~assets/logos/logo.png"
+                  />
+               </router-link>
             </q-toolbar-title>
          </q-toolbar>
       </q-header>
@@ -55,7 +61,19 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import HomePage from '../pages/private/HomePage.vue';
 
 const leftDrawerOpen = ref(false);
-
 </script>
+
+<style lang="scss" scoped>
+.logo-centered {
+   position: absolute;
+   top: 60%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+
+   image-rendering: -moz-crisp-edges;
+   border-radius: 50px;
+}
+</style>
