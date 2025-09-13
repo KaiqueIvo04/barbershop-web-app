@@ -82,6 +82,7 @@
                   <!-- Botões -->
                   <div class="q-mt-lg">
                      <q-btn
+                        @click="authenticate"
                         class="w-p-100 min-h-px-2"
                         color="primary"
                         label="Entrar"
@@ -104,11 +105,60 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
+import { auth } from 'src/services/auth.service';
+import { jwtDecode } from 'jwt-decode';
+import { UserType } from 'src/domain/enums/user.type.enum';
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+import type Admin from 'src/domain/interfaces/admin/admin.interface';
+import type Employee from 'src/domain/interfaces/employee/employee.interface';
+import type Client from 'src/domain/interfaces/client/client.interface';
+import { getById as getByIdAdmin } from 'src/services/admin.service';
 
 const $q = useQuasar();
 const email = ref('');
 const password = ref('');
 const showPassword = ref(false);
+
+type AllUsers = Admin | Employee | Client;
+
+async function authenticate() {
+   try {
+      // Send login requisiton
+      const responseToken: string = (
+         await auth({ email: email.value, password: password.value })
+      ).data.access_token;
+
+      // Decode token typing returned object
+      const tokenDecoded = jwtDecode<{
+         exp: number;
+         iat: number;
+         iss: string;
+         sub_type: UserType;
+         scopes: [];
+      }>(responseToken);
+
+      // Get infor of user logged
+      // Pass the token manually in headers, because the token of local storage was not setted yet.
+      const userResponse = await getUserById(tokenDecoded.iss, tokenDecoded.sub_type, {
+         headers: {
+            Authorization: `bearer ${accessToken}`,
+         },
+      });
+   } catch (error) {
+      password.value = '';
+      alert(error);
+   }
+}
+
+function getUserById(
+   id: string,
+   type: UserType,
+   axiosOptions?: AxiosRequestConfig,
+): Promise<AxiosResponse<AllUsers, unknown>> | undefined {
+   if (type === UserType.ADMIN) return getByIdAdmin(id, axiosOptions)
+   else if (type === UserType.EMPLOYEE) return getByIdEmployee(id, axiosOptions)
+   else return getByIdClient(id, axiosOptions)
+}
 </script>
 
 <style scoped></style>

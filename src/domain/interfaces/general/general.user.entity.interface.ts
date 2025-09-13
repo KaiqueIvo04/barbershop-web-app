@@ -4,4 +4,5 @@ export default interface GeneralUserEntity {
    type: UserType;
    last_login: string;
    active: boolean;
+   scopes: []
 }
