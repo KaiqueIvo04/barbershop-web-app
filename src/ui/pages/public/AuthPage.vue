@@ -105,21 +105,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
-import { auth } from 'src/services/auth.service';
+import { auth } from '@src/services/auth.service';
 import { jwtDecode } from 'jwt-decode';
-import { UserType } from 'src/domain/enums/user.type.enum';
+import { UserType } from '@src/domain/enums/user.type.enum';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
-import type Admin from 'src/domain/interfaces/admin/admin.interface';
-import type Employee from 'src/domain/interfaces/employee/employee.interface';
-import type Client from 'src/domain/interfaces/client/client.interface';
-import { getById as getByIdAdmin } from 'src/services/admin.service';
+import type Admin from '@src/domain/interfaces/admin/admin.interface';
+import type Employee from '@src/domain/interfaces/employee/employee.interface';
+import type Client from '@src/domain/interfaces/client/client.interface';
+import { getById as getByIdAdmin } from '@src/services/admin.service';
+import { getById as getByIdClient } from '@src/services/client.service';
+import { getById as getByIdEmployee } from '@src/services/employee.service';
+import { useLoggedStore } from '@src/stores/userLogged.store';
+import { useRouter } from 'vue-router';
 
 const $q = useQuasar();
 const email = ref('');
 const password = ref('');
 const showPassword = ref(false);
 
+const loggedUserStore = useLoggedStore()
+const router = useRouter()
+
 type AllUsers = Admin | Employee | Client;
+let user: AllUsers | undefined = undefined;
 
 async function authenticate() {
    try {
@@ -133,17 +141,28 @@ async function authenticate() {
          exp: number;
          iat: number;
          iss: string;
+         scope: [];
+         sub: string;
          sub_type: UserType;
-         scopes: [];
       }>(responseToken);
 
       // Get infor of user logged
       // Pass the token manually in headers, because the token of local storage was not setted yet.
-      const userResponse = await getUserById(tokenDecoded.iss, tokenDecoded.sub_type, {
+      const userResponse = await getUserById(tokenDecoded.sub, tokenDecoded.sub_type, {
          headers: {
-            Authorization: `bearer ${accessToken}`,
+            Authorization: `bearer ${responseToken}`,
          },
       });
+
+      // Set user data and redirect to your first route
+      if (userResponse && userResponse.data) {
+         user = userResponse.data
+         loggedUserStore.setCredential(user, responseToken)
+         const routeName = loggedUserStore.availableRoutes.length
+            ? loggedUserStore.availableRoutes[0]?.name
+            : 'NotFoundPage';
+         await router.push({ name: routeName });
+      }
    } catch (error) {
       password.value = '';
       alert(error);

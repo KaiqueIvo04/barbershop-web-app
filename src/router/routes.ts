@@ -67,6 +67,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/:catchAll(.*)*',
+    name: 'NotFoundPage',
     component: ErrorNotFound
   },
 ];
