@@ -4,7 +4,7 @@
          class="bg-primary text-white"
          elevated
       >
-         <q-toolbar class="row">
+         <q-toolbar class="row justify-between">
             <q-btn
                @click="
                   leftDrawerOpen ? (leftDrawerOpen = false) : (leftDrawerOpen = true)
@@ -15,18 +15,30 @@
                round
             />
 
-            <q-toolbar-title class="row justify-center">
-               <router-link
-                  :to="HomePage"
-                  class="row items-center"
-               >
-                  <img
-                     class="logo-centered shadow-2"
-                     width="60px"
-                     src="~assets/logos/logo.png"
+            <router-link :to="HomePage">
+               <img
+                  class="logo-centered shadow-2"
+                  width="60px"
+                  src="~assets/logos/logo.png"
+               />
+            </router-link>
+
+            <div class="row justify-center gutter-1">
+               <q-btn flat @click="toggleTheme">
+                  <q-icon
+                     name="compare"
+                     size="24px"
+                     class="cursor-pointer"
                   />
-               </router-link>
-            </q-toolbar-title>
+               </q-btn>
+               <q-btn flat @click="logout">
+                  <q-icon
+                     name="logout"
+                     size="24px"
+                     class="cursor-pointer"
+                  />
+               </q-btn>
+            </div>
          </q-toolbar>
       </q-header>
 
@@ -62,8 +74,37 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import HomePage from '../pages/private/HomePage.vue';
+import { useLoggedUserStore } from '@src/stores/userLogged.store';
+import { useRouter } from 'vue-router';
+import { useQuasar } from 'quasar';
+import Theme from 'src/domain/enums/theme.enum';
 
+const $q = useQuasar()
+
+const loggedUserStore = useLoggedUserStore();
+const router = useRouter();
 const leftDrawerOpen = ref(false);
+
+function toggleTheme() {
+   loggedUserStore.setTheme($q.dark.isActive ? Theme.LIGHT : Theme.DARK);
+}
+
+const loggingOut = ref(false);
+async function logout() {
+   if (loggedUserStore.token) {
+      loggingOut.value = true;
+
+      try {
+         loggedUserStore.clearCredential();
+
+         await router.push({ name: 'IndexPage' });
+      } catch (error) {
+         alert(error);
+      } finally {
+         loggingOut.value = false;
+      }
+   }
+}
 </script>
 
 <style lang="scss" scoped>

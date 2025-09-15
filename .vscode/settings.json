@@ -3,7 +3,7 @@
       "editor.defaultFormatter": "esbenp.prettier-vscode"
    },
    "[vue]": {
-      "editor.defaultFormatter": "Vue.volar"
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
    },
    "[jsonc]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"

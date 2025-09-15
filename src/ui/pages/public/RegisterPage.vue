@@ -84,6 +84,7 @@
                            <q-icon
                               name="lock_outline"
                               size="18px"
+                              left
                            />
                         </template>
                         <template v-slot:append>
@@ -108,6 +109,7 @@
                            <q-icon
                               name="check"
                               size="18px"
+                              left
                            />
                         </template>
                         <template v-slot:append>

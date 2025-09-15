@@ -67,6 +67,7 @@
                            <q-icon
                               name="lock_outline"
                               size="18px"
+                              left
                            />
                         </template>
                         <template v-slot:append>
@@ -115,7 +116,7 @@ import type Client from '@src/domain/interfaces/client/client.interface';
 import { getById as getByIdAdmin } from '@src/services/admin.service';
 import { getById as getByIdClient } from '@src/services/client.service';
 import { getById as getByIdEmployee } from '@src/services/employee.service';
-import { useLoggedStore } from '@src/stores/userLogged.store';
+import { useLoggedUserStore } from '@src/stores/userLogged.store';
 import { useRouter } from 'vue-router';
 
 const $q = useQuasar();
@@ -123,8 +124,8 @@ const email = ref('');
 const password = ref('');
 const showPassword = ref(false);
 
-const loggedUserStore = useLoggedStore()
-const router = useRouter()
+const loggedUserStore = useLoggedUserStore();
+const router = useRouter();
 
 type AllUsers = Admin | Employee | Client;
 let user: AllUsers | undefined = undefined;
@@ -156,8 +157,8 @@ async function authenticate() {
 
       // Set user data and redirect to your first route
       if (userResponse && userResponse.data) {
-         user = userResponse.data
-         loggedUserStore.setCredential(user, responseToken)
+         user = userResponse.data;
+         loggedUserStore.setCredential(user, responseToken);
          const routeName = loggedUserStore.availableRoutes.length
             ? loggedUserStore.availableRoutes[0]?.name
             : 'NotFoundPage';
@@ -174,9 +175,9 @@ function getUserById(
    type: UserType,
    axiosOptions?: AxiosRequestConfig,
 ): Promise<AxiosResponse<AllUsers, unknown>> | undefined {
-   if (type === UserType.ADMIN) return getByIdAdmin(id, axiosOptions)
-   else if (type === UserType.EMPLOYEE) return getByIdEmployee(id, axiosOptions)
-   else return getByIdClient(id, axiosOptions)
+   if (type === UserType.ADMIN) return getByIdAdmin(id, axiosOptions);
+   else if (type === UserType.EMPLOYEE) return getByIdEmployee(id, axiosOptions);
+   else return getByIdClient(id, axiosOptions);
 }
 </script>
 

@@ -7,11 +7,13 @@ import RegisterPage from '@pages/public/RegisterPage.vue';
 import ErrorNotFound from '@pages/public/ErrorNotFound.vue';
 import HomePage from '@pages/private/HomePage.vue';
 import homeMeta from './meta/home.meta';
+import { checkAuth } from './guards';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: LayoutPrivateRoutes,
+    beforeEnter: checkAuth,
     meta: {
       requiresAuth: true,
     },
@@ -29,8 +31,9 @@ const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/teste',
+    path: '/',
     component: LayoutPublicRoutes,
+    beforeEnter: checkAuth,
     meta: {
       requiresAuth: false,
     },
