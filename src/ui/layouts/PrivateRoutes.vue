@@ -15,7 +15,7 @@
                round
             />
 
-            <router-link :to="HomePage">
+            <router-link :to="SchedulesPage">
                <img
                   class="logo-centered shadow-2"
                   width="60px"
@@ -24,18 +24,24 @@
             </router-link>
 
             <div class="row justify-center gutter-1">
-               <q-btn flat @click="toggleTheme">
+               <q-btn
+                  @click="toggleTheme"
+                  flat
+               >
                   <q-icon
+                     class="cursor-pointer"
                      name="compare"
                      size="24px"
-                     class="cursor-pointer"
                   />
                </q-btn>
-               <q-btn flat @click="logout">
+               <q-btn
+                  @click="logout"
+                  flat
+               >
                   <q-icon
+                     class="cursor-pointer"
                      name="logout"
                      size="24px"
-                     class="cursor-pointer"
                   />
                </q-btn>
             </div>
@@ -48,7 +54,37 @@
          side="left"
          bordered
       >
-         <!-- drawer content -->
+         <q-list>
+            <q-item
+               v-for="availableRoute in loggedUserStore.availableRoutes"
+               :key="availableRoute.name"
+               :to="{ name: availableRoute.name }"
+               :focused="route.name === availableRoute.name"
+               clickable
+            >
+               <div
+                  :class="
+                     route.name === availableRoute.name ? 'text-primary ' : undefined
+                  "
+                  class="row items-center"
+               >
+                  <q-icon
+                     :name="availableRoute.icon"
+                     class="mx-4"
+                     size="1.4rem"
+                  ></q-icon>
+                  <p
+                     :class="
+                        route.name === availableRoute.name
+                           ? 'text-weight-bold my-0'
+                           : 'my-0'
+                     "
+                  >
+                     {{ availableRoute.label }}
+                  </p>
+               </div>
+            </q-item>
+         </q-list>
       </q-drawer>
 
       <q-page-container>
@@ -73,16 +109,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import HomePage from '../pages/private/HomePage.vue';
 import { useLoggedUserStore } from '@src/stores/userLogged.store';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useQuasar } from 'quasar';
 import Theme from 'src/domain/enums/theme.enum';
+import SchedulesPage from '../pages/private/SchedulesPage.vue';
 
-const $q = useQuasar()
+const $q = useQuasar();
 
 const loggedUserStore = useLoggedUserStore();
 const router = useRouter();
+const route = useRoute();
 const leftDrawerOpen = ref(false);
 
 function toggleTheme() {
@@ -110,6 +147,7 @@ async function logout() {
 <style lang="scss" scoped>
 .logo-centered {
    position: absolute;
+   z-index: 1;
    top: 60%;
    left: 50%;
    transform: translate(-50%, -50%);

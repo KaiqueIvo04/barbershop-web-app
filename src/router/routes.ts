@@ -5,9 +5,11 @@ import IndexPage from '@pages/public/IndexPage.vue';
 import AuthPage from '@pages/public/AuthPage.vue';
 import RegisterPage from '@pages/public/RegisterPage.vue';
 import ErrorNotFound from '@pages/public/ErrorNotFound.vue';
-import HomePage from '@pages/private/HomePage.vue';
-import homeMeta from './meta/home.meta';
-import { checkAuth } from './guards';
+import SchedulesPage from '@pages/private/SchedulesPage.vue';
+import schedulesMeta from './meta/schedules.meta';
+import { checkAuth, checkUserScope } from './guards';
+import AdminsPage from 'src/ui/pages/private/AdminsPage.vue';
+import adminsMeta from './meta/admins.meta';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -20,13 +22,21 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        redirect: '/home'
+        redirect: '/schedules'
       },
       {
-        path: '/home',
-        name: 'HomePage',
-        component: HomePage,
-        meta: homeMeta
+        path: '/schedules',
+        name: 'SchedulesPage',
+        component: SchedulesPage,
+        beforeEnter: checkUserScope,
+        meta: schedulesMeta
+      },
+      {
+        path: '/admins',
+        name: 'AdminsPage',
+        component: AdminsPage,
+        beforeEnter: checkUserScope,
+        meta: adminsMeta
       }
     ]
   },
